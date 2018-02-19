@@ -6,8 +6,8 @@ import { Action } from '@ngrx/store';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { of } from 'rxjs/observable/of';
-import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
+import { InfoSnackBarService } from '../info-snack-bar.service';
 
 
 @Injectable()
@@ -15,7 +15,7 @@ export class QmailFileEffects {
 
   constructor(private actions$: Actions,
               private http: HttpClient,
-              private snackBar: MatSnackBar,
+              private snackBar: InfoSnackBarService,
               private router: Router) {
   }
 
@@ -52,38 +52,34 @@ export class QmailFileEffects {
   private handleError(error: HttpErrorResponse, action) {
     switch (error.status) {
       case 0:
-        this.showSnackbar('Could not connect. Check your internet connection.');
+        this.snackBar.open('Could not connect. Check your internet connection.');
         break;
       case 404:
-        this.showSnackbar('File does not exist and cannot be edited.');
+        this.snackBar.open('File does not exist and cannot be edited.');
         break;
       case 409:
-        this.showSnackbar('File does already exist. Edit the file from the list instead.');
+        this.snackBar.open('File does already exist. Edit the file from the list instead.');
         break;
       case 400:
-        this.showSnackbar(error.error);
+        this.snackBar.open(error.error);
         break;
       case 500:
       default:
-        this.showSnackbar('Something went wrong. :-( Check the server logs.');
+        this.snackBar.open('Something went wrong. :-( Check the server logs.');
     }
     return of(action);
   }
 
   private addSuccess(qmailFile) {
-    this.showSnackbar(`File ${qmailFile.id} was successfully added.`);
+    this.snackBar.open(`File ${qmailFile.id} was successfully added.`);
     this.router.navigate(['/files']);
     return {type: QmailFileActionTypes.AddQmailFile, payload: {qmailFile}};
   }
 
   private updateSuccess(qmailFile) {
-    this.showSnackbar(`File ${qmailFile.id} was successfully edited.`);
+    this.snackBar.open(`File ${qmailFile.id} was successfully edited.`);
     const change = {id: qmailFile.id, changes: {content: qmailFile.content}};
     this.router.navigate(['/files']);
     return {type: QmailFileActionTypes.UpdateQmailFile, payload: {qmailFile: change}};
-  }
-
-  private showSnackbar(message: string) {
-    this.snackBar.open(message, 'OK', {duration: 3000});
   }
 }

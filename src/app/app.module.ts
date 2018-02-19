@@ -16,6 +16,8 @@ import { LoginComponent } from './auth/login-component/login.component';
 import { LoginGuard } from './auth/login.guard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FilesModule } from './files/files.module';
+import { InfoSnackBarService } from './info-snack-bar.service';
+import { MatSnackBarModule } from '@angular/material';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -36,10 +38,12 @@ const routes: Routes = [
     EffectsModule.forRoot([]),
     RouterModule.forRoot(routes),
     AuthModule,
-    FilesModule
+    FilesModule,
+    MatSnackBarModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    InfoSnackBarService
   ],
   bootstrap: [AppComponent]
 })

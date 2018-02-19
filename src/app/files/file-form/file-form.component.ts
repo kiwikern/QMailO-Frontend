@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { QmailFile } from '../qmail-file.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { RootState } from '../../reducers';
 import { selectById } from '../qmail-file.reducer';
 import { switchMap, tap } from 'rxjs/operators';
 import { AddQmailFileRequest, UpdateQmailFileRequest } from '../qmail-file.actions';
+import { InfoSnackBarService } from '../../info-snack-bar.service';
 
 @Component({
   selector: 'app-file-form',
@@ -18,6 +19,8 @@ export class FileFormComponent implements OnInit {
   id: string;
 
   constructor(private route: ActivatedRoute,
+              private router: Router,
+              private snackBar: InfoSnackBarService,
               private store: Store<RootState>) {
   }
 
@@ -29,8 +32,9 @@ export class FileFormComponent implements OnInit {
       if (file) {
         return this.file = file;
       } else {
-        // TODO: Throw not found error
-        return '';
+        this.snackBar.open(`File '${this.id}' could not be found.`);
+        this.router.navigate(['/files']);
+        return;
       }
     });
   }

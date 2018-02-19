@@ -50,4 +50,5 @@ const fileRoutes: Routes = [
     FabButtonComponent
   ]
 })
-export class FilesModule { }
+export class FilesModule {
+}

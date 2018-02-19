@@ -6,7 +6,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './auth.effects';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login-component/login.component';
-import { MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatSnackBarModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { LoginGuard } from './login.guard';
 import { FormsModule } from '@angular/forms';
 
@@ -20,8 +20,7 @@ import { FormsModule } from '@angular/forms';
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
-    MatSnackBarModule,
-    MatCardModule
+    MatCardModule,
   ],
   declarations: [LoginComponent],
   providers: [
