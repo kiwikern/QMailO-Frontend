@@ -6,7 +6,7 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field class="filter">
+  <mat-form-field class="filter stretch">
     <input matInput placeholder="Filter" (keyup)="applyFilter($event.target.value)">
   </mat-form-field>
 </div>
@@ -23,5 +23,7 @@
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: columnsToDisplay"></mat-row>
+  <mat-row *matRowDef="let row; columns: columnsToDisplay" [routerLink]="['/files/edit', row.id]"></mat-row>
 </mat-table>
+
+<app-fab-button [icon]="'add'" routerLink="new"></app-fab-button>

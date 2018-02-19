@@ -6,10 +6,14 @@ export enum QmailFileActionTypes {
   LoadQmailFiles = '[QmailFile] Load QmailFiles',
   LoadQmailFilesRequest = '[QmailFile] Request Loading QmailFiles',
   LoadQmailFilesFailed = '[QmailFile] Loading QmailFiles Failed',
+  AddQmailFileRequest = '[QmailFile] Request Adding QmailFile',
   AddQmailFile = '[QmailFile] Add QmailFile',
+  AddQmailFileFailed = '[QmailFile] Adding QmailFile Failed',
   UpsertQmailFile = '[QmailFile] Upsert QmailFile',
   AddQmailFiles = '[QmailFile] Add QmailFiles',
   UpsertQmailFiles = '[QmailFile] Upsert QmailFiles',
+  UpdateQmailFileRequest = '[QmailFile] Request Updating QmailFile',
+  UpdateQmailFileFailed = '[QmailFile] Updating QmailFile Failed',
   UpdateQmailFile = '[QmailFile] Update QmailFile',
   UpdateQmailFiles = '[QmailFile] Update QmailFiles',
   DeleteQmailFile = '[QmailFile] Delete QmailFile',
@@ -28,6 +32,13 @@ export class LoadQmailFilesRequest implements Action {
   readonly type = QmailFileActionTypes.LoadQmailFilesRequest;
 
   constructor() {
+  }
+}
+
+export class AddQmailFileRequest implements Action {
+  readonly type = QmailFileActionTypes.AddQmailFileRequest;
+
+  constructor(public payload: { qmailFile: QmailFile }) {
   }
 }
 
@@ -63,6 +74,13 @@ export class UpdateQmailFile implements Action {
   readonly type = QmailFileActionTypes.UpdateQmailFile;
 
   constructor(public payload: { qmailFile: Update<QmailFile> }) {
+  }
+}
+
+export class UpdateQmailFileRequest implements Action {
+  readonly type = QmailFileActionTypes.UpdateQmailFileRequest;
+
+  constructor(public payload: { qmailFile: QmailFile }) {
   }
 }
 

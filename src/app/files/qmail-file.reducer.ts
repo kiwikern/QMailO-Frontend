@@ -5,16 +5,12 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 export interface FileState extends EntityState<QmailFile> {
   // additional entities state properties
-  isLoading: boolean;
-  hasError: boolean;
 }
 
 export const adapter: EntityAdapter<QmailFile> = createEntityAdapter<QmailFile>();
 
 export const initialState: FileState = adapter.getInitialState({
   // additional entity state properties
-  isLoading: false,
-  hasError: false
 });
 
 export function reducer(state = initialState,
@@ -75,3 +71,5 @@ const {
 
 export const selectQMailFiles = createFeatureSelector<FileState>('files');
 export const selectAllFiles = createSelector(selectQMailFiles, selectAll);
+
+export const selectById = id => createSelector(selectAllFiles, files => files.find(f => f.id === id));

@@ -1,0 +1,28 @@
+<form #form="ngForm" (ngSubmit)="save()">
+  <mat-card>
+
+    <mat-card-title *ngIf="id">
+      Edit
+    </mat-card-title>
+    <mat-card-title *ngIf="!id">
+      Add a new file
+    </mat-card-title>
+
+    <mat-card-content>
+      <mat-form-field>
+        <span matPrefix class="gray">.qmail-</span>
+        <input matInput name="id"  placeholder="Name" [(ngModel)]="file.id" [disabled]="id" required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <textarea matInput name="content"  placeholder="Content" required [(ngModel)]="file.content"></textarea>
+      </mat-form-field>
+    </mat-card-content>
+
+    <mat-card-actions align="right">
+      <button mat-button routerLink="/files" type="button">Cancel</button>
+      <button mat-raised-button type="submit" [disabled]="!form.valid">Save</button>
+    </mat-card-actions>
+
+  </mat-card>
+</form>

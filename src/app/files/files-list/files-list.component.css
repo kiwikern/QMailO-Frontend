@@ -5,3 +5,7 @@
 .filter.small {
   max-width: 30vw;
 }
+
+.filter.stretch {
+  flex: 1;
+}

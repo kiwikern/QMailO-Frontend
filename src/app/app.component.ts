@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { RootState } from './reducers';
+import { LoadQmailFilesRequest } from './files/qmail-file.actions';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +10,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-  constructor() {
+  constructor(store: Store<RootState>) {
+    store.dispatch(new LoadQmailFilesRequest());
   }
 
 }

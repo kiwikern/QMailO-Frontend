@@ -1,11 +1,10 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { RootState } from '../../reducers/index';
+import { RootState } from '../../reducers';
 import { Store } from '@ngrx/store';
 import { selectAllFiles } from '../qmail-file.reducer';
-import { LoadQmailFilesRequest } from '../qmail-file.actions';
 import { Observable } from 'rxjs/Observable';
 import { MatSort, MatTableDataSource } from '@angular/material';
-import { map, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { QmailFile } from '../qmail-file.model';
 
@@ -27,15 +26,10 @@ export class FilesListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.store.dispatch(new LoadQmailFilesRequest());
     this.$files = this.store.select(selectAllFiles);
-    this.$files
-      .pipe(
-        map(array => array.map(f => this.transformEntities(f))),
-        takeUntil(this.$onDestroy)
-      )
+    this.$files.pipe(takeUntil(this.$onDestroy))
       .subscribe(files => this.dataSource.data = files);
-    this.dataSource.filterPredicate = this.filterPredicate;
+    this.dataSource.filterPredicate = (data, filter) => this.filterPredicate(data, filter);
 
     this.sort.sort({id: 'id', start: 'asc', disableClear: true});
   }
@@ -50,19 +44,13 @@ export class FilesListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   applyFilter(filterValue: string) {
-    const normalizedValue = filterValue.trim().toLowerCase();
-    this.dataSource.filter = normalizedValue;
+    this.dataSource.filter = filterValue;
   }
 
   private filterPredicate(data, filter) {
-    const value = data[this.searchField].toLowerCase().trim();
-    const normFilter = filter.trim().toLowerCase();
+    const value = (data[this.searchField] || '').toLowerCase().trim();
+    const normFilter = (filter || '').trim().toLowerCase();
     return value.includes(normFilter);
-  }
-
-  private transformEntities(file) {
-    const id = (file.id || '').substring(7).toLowerCase();
-    return ({id, content: file.content});
   }
 }
 
