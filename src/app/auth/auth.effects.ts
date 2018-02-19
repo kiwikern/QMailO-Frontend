@@ -4,7 +4,7 @@ import { AuthActionTypes } from './auth.actions';
 import { Observable } from 'rxjs/Observable';
 import { Action } from '@ngrx/store';
 import { HttpClient } from '@angular/common/http';
-import { catchError, mergeMap, tap } from 'rxjs/operators';
+import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { Router } from '@angular/router';
 import { InfoSnackBarService } from '../info-snack-bar.service';
@@ -31,7 +31,8 @@ export class AuthEffects {
 
   @Effect() logout$: Observable<Action> = this.actions$.pipe(
     ofType(AuthActionTypes.LOGOUT),
-    tap(() => this.router.navigate(['/login']))
+    tap(() => this.router.navigate(['/login'])),
+    map(() => ({type: 'LOGOUT_SUCCESS'}))
   );
 
   private handleError(error) {

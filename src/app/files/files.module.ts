@@ -16,12 +16,14 @@ import {
 import { CdkTableModule } from '@angular/cdk/table';
 import { EffectsModule } from '@ngrx/effects';
 import { QmailFileEffects } from './qmail-file.effects';
-import { StoreModule } from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { reducer } from './qmail-file.reducer';
 import { FileFormComponent } from './file-form/file-form.component';
 import { FormsModule } from '@angular/forms';
 import { FabButtonComponent } from './fab-button/fab-button.component';
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
+import { LoadQmailFilesRequest } from './qmail-file.actions';
+import { RootState } from '../reducers';
 
 const fileRoutes: Routes = [
   {path: '', component: FilesListComponent},
@@ -55,4 +57,7 @@ const fileRoutes: Routes = [
   ]
 })
 export class FilesModule {
+  constructor(store: Store<RootState>) {
+    store.dispatch(new LoadQmailFilesRequest());
+  }
 }

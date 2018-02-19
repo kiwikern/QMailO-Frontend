@@ -15,7 +15,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './auth/login-component/login.component';
 import { LoginGuard } from './auth/login.guard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FilesModule } from './files/files.module';
 import { InfoSnackBarService } from './info-snack-bar.service';
 import { MatSnackBarModule } from '@angular/material';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -23,7 +22,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: '', redirectTo: 'files', pathMatch: 'full'},
-  {path: 'files', loadChildren: './files/files.module#FilesModule', canActivate: [LoginGuard]}
+  {path: 'files', loadChildren: './files/files.module#FilesModule', canLoad: [LoginGuard]}
 ];
 
 @NgModule({
@@ -39,7 +38,6 @@ const routes: Routes = [
     EffectsModule.forRoot([]),
     RouterModule.forRoot(routes),
     AuthModule,
-    FilesModule,
     MatSnackBarModule,
     ServiceWorkerModule.register('/ngsw-worker.js', {enabled: environment.production})
   ],

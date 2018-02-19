@@ -1,7 +1,7 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { QmailFile } from './qmail-file.model';
-import { QmailFileActions, QmailFileActionTypes } from './qmail-file.actions';
-import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { QmailFileActionTypes } from './qmail-file.actions';
+import { Action, createFeatureSelector, createSelector } from '@ngrx/store';
 
 export interface FileState extends EntityState<QmailFile> {
   // additional entities state properties
@@ -16,7 +16,7 @@ export const initialState: FileState = adapter.getInitialState({
 });
 
 export function reducer(state = initialState,
-                        action: QmailFileActions): FileState {
+                        action: Action): FileState {
   switch (action.type) {
 
     case QmailFileActionTypes.AddQmailFile: {

@@ -18,7 +18,7 @@ export function reducer(state = initialState, action: AuthActions): AuthState {
       localStorage.setItem('qmailo.jwt', jwt);
       return {jwt};
     case AuthActionTypes.LOGOUT:
-      localStorage.setItem('qmailo.jwt', null);
+      localStorage.removeItem('qmailo.jwt');
       return {jwt: null};
     default:
       return state;

@@ -3,7 +3,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { QmailFileActionTypes } from './qmail-file.actions';
 import { Observable } from 'rxjs/Observable';
 import { Action } from '@ngrx/store';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { of } from 'rxjs/observable/of';
 import { Router } from '@angular/router';
@@ -25,7 +25,7 @@ export class QmailFileEffects {
     mergeMap(action =>
       this.http.get('/api/files').pipe(
         map(data => ({type: QmailFileActionTypes.LoadQmailFiles, payload: {qmailFiles: data}})),
-        catchError(() => of({type: QmailFileActionTypes.LoadQmailFilesFailed}))
+        catchError(err => this.handleError(err, {type: QmailFileActionTypes.LoadQmailFilesFailed}))
       ))
   );
 
@@ -53,13 +53,13 @@ export class QmailFileEffects {
   @Effect() delete$: Observable<Action> = this.actions$.pipe(
     ofType(QmailFileActionTypes.DeleteQmailFileRequest),
     mergeMap((action: any) =>
-      this.http.delete('/api/files', action.payload).pipe(
+      this.http.delete(`/api/files/${action.payload.id}`).pipe(
         map(() => this.deleteSuccess(action.payload.id)),
         catchError(err => this.handleError(err, {type: QmailFileActionTypes.DeleteQmailFileFailed}))
       ))
   );
 
-  private handleError(error: HttpErrorResponse, action) {
+  private handleError(error: HttpErrorResponse, action): Observable<any> {
     const actions = [action];
     switch (error.status) {
       case 0:
@@ -82,7 +82,7 @@ export class QmailFileEffects {
       default:
         this.snackBar.open('Something went wrong. Check the server logs.');
     }
-    return of(actions);
+    return of(actions).pipe(switchMap(a => a));
   }
 
   private addSuccess(qmailFile) {

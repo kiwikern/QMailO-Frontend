@@ -64,7 +64,8 @@ export class FileFormComponent implements OnInit, OnDestroy {
 
   private checkFile(file) {
     if (file) {
-      return this.file = file;
+      this.onDestroy$.next(true);
+      return this.file = Object.assign({}, file);
     } else if (this.id) {
       this.snackBar.open(`File '${this.id}' could not be found.`);
       this.router.navigate(['/files']);
