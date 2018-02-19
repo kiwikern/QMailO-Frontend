@@ -1,0 +1,7 @@
+.filter {
+  margin: 0 10px;
+}
+
+.filter.small {
+  max-width: 30vw;
+}

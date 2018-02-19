@@ -1,0 +1,27 @@
+<div style="display: flex; flex-direction: row">
+  <mat-form-field class="filter small">
+    <mat-select placeholder="Search field" [(value)]="searchField" class="form">
+      <mat-option value="id">Name</mat-option>
+      <mat-option value="content">Content</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="filter">
+    <input matInput placeholder="Filter" (keyup)="applyFilter($event.target.value)">
+  </mat-form-field>
+</div>
+
+<mat-table [dataSource]="dataSource" matSort matSortDisableClear="true">
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+    <mat-cell *matCellDef="let file">{{file.id}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="content">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Content</mat-header-cell>
+    <mat-cell *matCellDef="let file">{{file.content}}</mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: columnsToDisplay"></mat-row>
+</mat-table>
