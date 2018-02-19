@@ -31,7 +31,7 @@ export class FileFormComponent implements OnInit {
     ).subscribe(file => {
       if (file) {
         return this.file = file;
-      } else {
+      } else if (this.id) {
         this.snackBar.open(`File '${this.id}' could not be found.`);
         this.router.navigate(['/files']);
         return;
