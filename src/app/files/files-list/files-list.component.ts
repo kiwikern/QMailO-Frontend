@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { RootState } from '../reducers';
+import { RootState } from '../../reducers/index';
 import { Store } from '@ngrx/store';
 import { selectAllFiles } from '../qmail-file.reducer';
 import { LoadQmailFilesRequest } from '../qmail-file.actions';

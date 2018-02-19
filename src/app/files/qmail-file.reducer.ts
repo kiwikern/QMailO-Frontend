@@ -1,10 +1,9 @@
-import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
+import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { QmailFile } from './qmail-file.model';
 import { QmailFileActions, QmailFileActionTypes } from './qmail-file.actions';
-import { RootState } from './reducers';
-import { createSelector } from '@ngrx/store';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-export interface State extends EntityState<QmailFile> {
+export interface FileState extends EntityState<QmailFile> {
   // additional entities state properties
   isLoading: boolean;
   hasError: boolean;
@@ -12,14 +11,14 @@ export interface State extends EntityState<QmailFile> {
 
 export const adapter: EntityAdapter<QmailFile> = createEntityAdapter<QmailFile>();
 
-export const initialState: State = adapter.getInitialState({
+export const initialState: FileState = adapter.getInitialState({
   // additional entity state properties
   isLoading: false,
   hasError: false
 });
 
 export function reducer(state = initialState,
-                        action: QmailFileActions): State {
+                        action: QmailFileActions): FileState {
   switch (action.type) {
     case QmailFileActionTypes.AddQmailFile: {
       return adapter.addOne((<any>action).payload.qmailFile, state);
@@ -74,5 +73,5 @@ const {
   selectTotal,
 } = adapter.getSelectors();
 
-export const selectQMailFiles = (state: RootState) => state.qMailFiles;
+export const selectQMailFiles = createFeatureSelector<FileState>('files');
 export const selectAllFiles = createSelector(selectQMailFiles, selectAll);

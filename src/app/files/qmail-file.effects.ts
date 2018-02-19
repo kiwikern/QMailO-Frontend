@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {Actions, Effect, ofType} from '@ngrx/effects';
-import {QmailFileActionTypes} from './qmail-file.actions';
-import {Observable} from 'rxjs/Observable';
-import {Action} from '@ngrx/store';
-import {catchError, map, mergeMap} from 'rxjs/operators';
-import {HttpClient} from '@angular/common/http';
-import {of} from 'rxjs/observable/of';
+import { Injectable } from '@angular/core';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { QmailFileActionTypes } from './qmail-file.actions';
+import { Observable } from 'rxjs/Observable';
+import { Action } from '@ngrx/store';
+import { catchError, map, mergeMap } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { of } from 'rxjs/observable/of';
 
 
 @Injectable()

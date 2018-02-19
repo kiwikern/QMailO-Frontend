@@ -1,6 +1,6 @@
-import {Action} from '@ngrx/store';
-import {Update} from '@ngrx/entity';
-import {QmailFile} from './qmail-file.model';
+import { Action } from '@ngrx/store';
+import { Update } from '@ngrx/entity';
+import { QmailFile } from './qmail-file.model';
 
 export enum QmailFileActionTypes {
   LoadQmailFiles = '[QmailFile] Load QmailFiles',

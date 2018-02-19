@@ -1,4 +1,4 @@
-import { reducer, initialState } from './qmail-file.reducer';
+import { initialState, reducer } from './qmail-file.reducer';
 
 describe('QmailFile Reducer', () => {
   describe('unknown action', () => {
