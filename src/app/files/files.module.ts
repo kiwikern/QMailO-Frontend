@@ -8,6 +8,7 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
+  MatProgressSpinnerModule,
   MatSelectModule,
   MatSortModule,
   MatTableModule
@@ -20,6 +21,7 @@ import { reducer } from './qmail-file.reducer';
 import { FileFormComponent } from './file-form/file-form.component';
 import { FormsModule } from '@angular/forms';
 import { FabButtonComponent } from './fab-button/fab-button.component';
+import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 
 const fileRoutes: Routes = [
   {path: '', component: FilesListComponent},
@@ -42,6 +44,8 @@ const fileRoutes: Routes = [
     MatButtonModule,
     MatCardModule,
     MatIconModule,
+    MatProgressSpinnerModule,
+    ScrollDispatchModule,
     FormsModule
   ],
   declarations: [

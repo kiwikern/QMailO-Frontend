@@ -8,6 +8,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { of } from 'rxjs/observable/of';
 import { Router } from '@angular/router';
 import { InfoSnackBarService } from '../info-snack-bar.service';
+import { AuthActionTypes } from '../auth/auth.actions';
 
 
 @Injectable()
@@ -49,10 +50,24 @@ export class QmailFileEffects {
       ))
   );
 
+  @Effect() delete$: Observable<Action> = this.actions$.pipe(
+    ofType(QmailFileActionTypes.DeleteQmailFileRequest),
+    mergeMap((action: any) =>
+      this.http.delete('/api/files', action.payload).pipe(
+        map(() => this.deleteSuccess(action.payload.id)),
+        catchError(err => this.handleError(err, {type: QmailFileActionTypes.DeleteQmailFileFailed}))
+      ))
+  );
+
   private handleError(error: HttpErrorResponse, action) {
+    const actions = [action];
     switch (error.status) {
       case 0:
         this.snackBar.open('Could not connect. Check your internet connection.');
+        break;
+      case 401:
+        this.snackBar.open('You need to be logged in.');
+        actions.push({type: AuthActionTypes.LOGOUT});
         break;
       case 404:
         this.snackBar.open('File does not exist and cannot be edited.');
@@ -65,15 +80,21 @@ export class QmailFileEffects {
         break;
       case 500:
       default:
-        this.snackBar.open('Something went wrong. :-( Check the server logs.');
+        this.snackBar.open('Something went wrong. Check the server logs.');
     }
-    return of(action);
+    return of(actions);
   }
 
   private addSuccess(qmailFile) {
     this.snackBar.open(`File ${qmailFile.id} was successfully added.`);
     this.router.navigate(['/files']);
     return {type: QmailFileActionTypes.AddQmailFile, payload: {qmailFile}};
+  }
+
+  private deleteSuccess(id) {
+    this.snackBar.open(`File ${id} was successfully deleted.`);
+    this.router.navigate(['/files']);
+    return {type: QmailFileActionTypes.DeleteQmailFile, payload: {id}};
   }
 
   private updateSuccess(qmailFile) {

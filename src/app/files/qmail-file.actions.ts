@@ -17,6 +17,8 @@ export enum QmailFileActionTypes {
   UpdateQmailFile = '[QmailFile] Update QmailFile',
   UpdateQmailFiles = '[QmailFile] Update QmailFiles',
   DeleteQmailFile = '[QmailFile] Delete QmailFile',
+  DeleteQmailFileRequest = '[QmailFile] Request Deleting QmailFile',
+  DeleteQmailFileFailed = '[QmailFile] Deleting QmailFile Failed',
   DeleteQmailFiles = '[QmailFile] Delete QmailFiles',
   ClearQmailFiles = '[QmailFile] Clear QmailFiles'
 }
@@ -88,6 +90,13 @@ export class UpdateQmailFiles implements Action {
   readonly type = QmailFileActionTypes.UpdateQmailFiles;
 
   constructor(public payload: { qmailFiles: Update<QmailFile>[] }) {
+  }
+}
+
+export class DeleteQmailFileRequest implements Action {
+  readonly type = QmailFileActionTypes.DeleteQmailFileRequest;
+
+  constructor(public payload: { id: string }) {
   }
 }
 

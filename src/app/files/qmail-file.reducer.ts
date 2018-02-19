@@ -5,17 +5,20 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 export interface FileState extends EntityState<QmailFile> {
   // additional entities state properties
+  isLoading: boolean;
 }
 
 export const adapter: EntityAdapter<QmailFile> = createEntityAdapter<QmailFile>();
 
 export const initialState: FileState = adapter.getInitialState({
   // additional entity state properties
+  isLoading: false
 });
 
 export function reducer(state = initialState,
                         action: QmailFileActions): FileState {
   switch (action.type) {
+
     case QmailFileActionTypes.AddQmailFile: {
       return adapter.addOne((<any>action).payload.qmailFile, state);
     }
@@ -49,8 +52,15 @@ export function reducer(state = initialState,
     }
 
     case QmailFileActionTypes.LoadQmailFiles: {
+      state = Object.assign({}, state, {isLoading: false});
       return adapter.addAll((<any>action).payload.qmailFiles, state);
     }
+
+    case QmailFileActionTypes.LoadQmailFilesRequest:
+      return Object.assign({}, state, {isLoading: true});
+
+    case QmailFileActionTypes.LoadQmailFilesFailed:
+      return Object.assign({}, state, {isLoading: false});
 
     case QmailFileActionTypes.ClearQmailFiles: {
       return adapter.removeAll(state);
@@ -71,5 +81,7 @@ const {
 
 export const selectQMailFiles = createFeatureSelector<FileState>('files');
 export const selectAllFiles = createSelector(selectQMailFiles, selectAll);
+
+export const selectIsLoading = createSelector(selectQMailFiles, state => state.isLoading);
 
 export const selectById = id => createSelector(selectAllFiles, files => files.find(f => f.id === id));

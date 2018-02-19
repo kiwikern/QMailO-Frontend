@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { RootState } from '../../reducers';
 import { Store } from '@ngrx/store';
-import { selectAllFiles } from '../qmail-file.reducer';
+import { selectAllFiles, selectIsLoading } from '../qmail-file.reducer';
 import { Observable } from 'rxjs/Observable';
 import { MatSort, MatTableDataSource } from '@angular/material';
 import { takeUntil } from 'rxjs/operators';
@@ -14,7 +14,8 @@ import { QmailFile } from '../qmail-file.model';
   styleUrls: ['./files-list.component.css']
 })
 export class FilesListComponent implements OnInit, AfterViewInit, OnDestroy {
-  $files: Observable<QmailFile[]>;
+  files$: Observable<QmailFile[]>;
+  isLoading$: Observable<boolean>;
   columnsToDisplay = ['id', 'content'];
   dataSource = new MatTableDataSource<QmailFile>();
   searchField = 'id';
@@ -26,8 +27,9 @@ export class FilesListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.$files = this.store.select(selectAllFiles);
-    this.$files.pipe(takeUntil(this.$onDestroy))
+    this.files$ = this.store.select(selectAllFiles);
+    this.isLoading$ = this.store.select(selectIsLoading);
+    this.files$.pipe(takeUntil(this.$onDestroy))
       .subscribe(files => this.dataSource.data = files);
     this.dataSource.filterPredicate = (data, filter) => this.filterPredicate(data, filter);
 
