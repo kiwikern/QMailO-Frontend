@@ -16,7 +16,7 @@ import { LoginComponent } from './auth/login-component/login.component';
 import { LoginGuard } from './auth/login.guard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InfoSnackBarService } from './info-snack-bar.service';
-import { MatSnackBarModule } from '@angular/material';
+import { MatButtonModule, MatIconModule, MatSnackBarModule, MatToolbarModule } from '@angular/material';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 const routes: Routes = [
@@ -39,6 +39,9 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     AuthModule,
     MatSnackBarModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
     ServiceWorkerModule.register('/ngsw-worker.js', {enabled: environment.production})
   ],
   providers: [
