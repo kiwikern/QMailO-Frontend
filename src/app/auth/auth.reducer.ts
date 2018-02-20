@@ -26,4 +26,4 @@ export function reducer(state = initialState, action: AuthActions): AuthState {
 }
 
 export const authSelector = createFeatureSelector<AuthState>('auth');
-export const jwtSelector = createSelector(authSelector, (state: AuthState) => state.jwt);
+export const selectJwt = createSelector(authSelector, (state: AuthState) => state.jwt);

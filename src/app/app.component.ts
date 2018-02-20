@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { RootState } from './reducers';
 import { Store } from '@ngrx/store';
 import { Logout } from './auth/auth.actions';
-import { jwtSelector } from './auth/auth.reducer';
+import { selectJwt } from './auth/auth.reducer';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.jwt$ = this.store.select(jwtSelector);
+    this.jwt$ = this.store.select(selectJwt);
   }
 
   logout() {

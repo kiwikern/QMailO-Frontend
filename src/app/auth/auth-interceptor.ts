@@ -3,14 +3,14 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { RootState } from '../reducers';
-import { jwtSelector } from './auth.reducer';
+import { selectJwt } from './auth.reducer';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   private jwt;
 
   constructor(private store: Store<RootState>) {
-    store.select(jwtSelector).subscribe(jwt => this.jwt = jwt);
+    store.select(selectJwt).subscribe(jwt => this.jwt = jwt);
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
