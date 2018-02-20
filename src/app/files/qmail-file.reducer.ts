@@ -3,10 +3,14 @@ import { QmailFile } from './qmail-file.model';
 import { QmailFileActionTypes } from './qmail-file.actions';
 import { Action, createFeatureSelector, createSelector } from '@ngrx/store';
 
+export type SortOrder = 'asc' | 'desc';
+
 export interface FileState extends EntityState<QmailFile> {
   // additional entities state properties
   isLoading: boolean;
   isSaving: boolean;
+  sortAttribute: string;
+  sortOrder: SortOrder;
 }
 
 export const adapter: EntityAdapter<QmailFile> = createEntityAdapter<QmailFile>();
@@ -14,11 +18,13 @@ export const adapter: EntityAdapter<QmailFile> = createEntityAdapter<QmailFile>(
 export const initialState: FileState = adapter.getInitialState({
   // additional entity state properties
   isLoading: false,
-  isSaving: false
+  isSaving: false,
+  sortAttribute: 'id',
+  sortOrder: 'asc' as SortOrder
 });
 
 export function reducer(state = initialState,
-                        action: Action): FileState {
+                        action: Action | any): FileState {
   switch (action.type) {
 
     case QmailFileActionTypes.AddQmailFileRequest:
@@ -81,6 +87,13 @@ export function reducer(state = initialState,
       return adapter.removeAll(state);
     }
 
+    case QmailFileActionTypes.ChangeSortSettings: {
+      return Object.assign({}, state, {
+        sortAttribute: action.payload.sortAttribute,
+        sortOrder: action.payload.sortOrder
+      });
+    }
+
     default: {
       return state;
     }
@@ -101,3 +114,8 @@ export const selectIsLoading = createSelector(selectQMailFiles, state => state.i
 export const selectIsSaving = createSelector(selectQMailFiles, state => state.isSaving);
 
 export const selectById = id => createSelector(selectAllFiles, files => files.find(f => f.id === id));
+
+export const selectSortSettings = createSelector(selectQMailFiles, state => ({
+  sortAttribute: state.sortAttribute,
+  sortOrder: state.sortOrder
+}));

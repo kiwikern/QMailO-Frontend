@@ -1,8 +1,10 @@
 import { Action } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 import { QmailFile } from './qmail-file.model';
+import { SortOrder } from './qmail-file.reducer';
 
 export enum QmailFileActionTypes {
+  ChangeSortSettings = '[QmailFile] Change Sort Settings',
   LoadQmailFiles = '[QmailFile] Load QmailFiles',
   LoadQmailFilesRequest = '[QmailFile] Request Loading QmailFiles',
   LoadQmailFilesFailed = '[QmailFile] Loading QmailFiles Failed',
@@ -116,6 +118,13 @@ export class DeleteQmailFiles implements Action {
 
 export class ClearQmailFiles implements Action {
   readonly type = QmailFileActionTypes.ClearQmailFiles;
+}
+
+export class ChangeSortSettings implements Action {
+  readonly type = QmailFileActionTypes.ChangeSortSettings;
+
+  constructor(public payload: { sortAttribute: string, sortOrder: SortOrder}) {
+  }
 }
 
 export type QmailFileActions =

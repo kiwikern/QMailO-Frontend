@@ -1,12 +1,13 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { RootState } from '../../reducers';
 import { Store } from '@ngrx/store';
-import { selectAllFiles, selectIsLoading } from '../qmail-file.reducer';
+import { selectAllFiles, selectIsLoading, selectSortSettings, SortOrder } from '../qmail-file.reducer';
 import { Observable } from 'rxjs/Observable';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import { MatSort, MatTableDataSource, Sort } from '@angular/material';
 import { takeUntil } from 'rxjs/operators';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { QmailFile } from '../qmail-file.model';
+import { ChangeSortSettings } from '../qmail-file.actions';
 
 @Component({
   selector: 'app-files-list',
@@ -19,7 +20,8 @@ export class FilesListComponent implements OnInit, AfterViewInit, OnDestroy {
   columnsToDisplay = ['id', 'content'];
   dataSource = new MatTableDataSource<QmailFile>();
   searchField = 'id';
-  $onDestroy = new ReplaySubject<boolean>(1);
+  onDestroy$ = new ReplaySubject<boolean>(1);
+  sortSettings$: Observable<{ sortAttribute: string; sortOrder: SortOrder }>;
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -29,11 +31,10 @@ export class FilesListComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     this.files$ = this.store.select(selectAllFiles);
     this.isLoading$ = this.store.select(selectIsLoading);
-    this.files$.pipe(takeUntil(this.$onDestroy))
+    this.files$.pipe(takeUntil(this.onDestroy$))
       .subscribe(files => this.dataSource.data = files);
     this.dataSource.filterPredicate = (data, filter) => this.filterPredicate(data, filter);
-
-    this.sort.sort({id: 'id', start: 'asc', disableClear: true});
+    this.sortSettings$ = this.store.select(selectSortSettings);
   }
 
   ngAfterViewInit() {
@@ -41,12 +42,17 @@ export class FilesListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.$onDestroy.next(true);
-    this.$onDestroy.complete();
+    this.onDestroy$.next(true);
+    this.onDestroy$.complete();
   }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue;
+  }
+
+  sortChange(sort: Sort) {
+    const sortOrder = sort.direction !== '' ? sort.direction : 'asc';
+    this.store.dispatch(new ChangeSortSettings({sortAttribute: sort.active, sortOrder}));
   }
 
   private filterPredicate(data, filter) {
