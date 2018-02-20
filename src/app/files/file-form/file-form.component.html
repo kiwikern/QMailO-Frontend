@@ -1,6 +1,7 @@
-<form #form="ngForm" (ngSubmit)="save()">
+<form #form="ngForm" (ngSubmit)="save()" class="container">
   <mat-card>
-
+    <!-- Must not be at last position because of ::last-child for mat-card -->
+    <mat-progress-bar class="full-width" mode="indeterminate" *ngIf="isLoading || (isSaving$ | async)"></mat-progress-bar>
     <mat-card-title *ngIf="id">
       Edit
     </mat-card-title>
@@ -30,7 +31,5 @@
       <button mat-button routerLink="/files" type="button">Cancel</button>
       <button mat-raised-button type="submit" [disabled]="!form.valid">Save</button>
     </mat-card-actions>
-
-    <mat-progress-bar class="full-width" mode="indeterminate" *ngIf="isLoading || (isSaving$ | async)"></mat-progress-bar>
   </mat-card>
 </form>

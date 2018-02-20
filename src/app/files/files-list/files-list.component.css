@@ -3,7 +3,7 @@
 }
 
 .filter.small {
-  max-width: 30vw;
+  flex: 0 1 100px;
 }
 
 .filter.stretch {
@@ -23,6 +23,25 @@ mat-header-row {
   z-index: 100;
 }
 
-mat-card-header-text {
-  margin: 0;
+mat-card {
+  max-width: 800px;
+}
+
+.container {
+  max-width: 100vw;
+  display: flex;
+  margin: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.preserve-spaces {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre;
+  display: block;
+}
+
+::ng-deep .mat-form-field .mat-form-field-infix {
+  width: auto;
 }
