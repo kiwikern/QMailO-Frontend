@@ -43,8 +43,11 @@ export class AuthEffects {
       this.snackBar.open('No internet connection.');
     } else if (error.status === 500) {
       this.snackBar.open('Internal error. Check your server logs.');
+    } else if (error.status === 504) {
+      this.snackBar.open('Server not reachable.');
     } else {
-      this.snackBar.open('Something went wrong. :-(');
+      this.snackBar.open('Something went wrong. Check browser console.');
+      console.log(error);
     }
     return of({type: AuthActionTypes.LOGIN_FAIL});
   }

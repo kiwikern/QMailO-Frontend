@@ -78,9 +78,15 @@ export class QmailFileEffects {
       case 400:
         this.snackBar.open(error.error);
         break;
+      case 504:
+        this.snackBar.open('Server not reachable.');
+        break;
       case 500:
-      default:
         this.snackBar.open('Something went wrong. Check the server logs.');
+        break;
+      default:
+        console.log(error);
+        this.snackBar.open('Something went wrong. Check the browser console.');
     }
     return of(actions).pipe(switchMap(a => a));
   }
