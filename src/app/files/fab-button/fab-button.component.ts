@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, Input, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
@@ -16,7 +16,8 @@ import { animate, style, transition, trigger } from '@angular/animations';
         animate('300ms ease-in', style({transform: 'translateY(100%)'}))
       ])
     ])
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FabButtonComponent implements OnInit {
   @HostBinding('class.fab') fabClass = true;

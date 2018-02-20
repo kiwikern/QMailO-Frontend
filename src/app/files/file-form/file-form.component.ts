@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { QmailFile } from '../qmail-file.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -14,7 +14,8 @@ import { Observable } from 'rxjs/Observable';
 @Component({
   selector: 'app-file-form',
   templateUrl: './file-form.component.html',
-  styleUrls: ['./file-form.component.css']
+  styleUrls: ['./file-form.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FileFormComponent implements OnInit, OnDestroy {
 

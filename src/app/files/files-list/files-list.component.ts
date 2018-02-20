@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { RootState } from '../../reducers';
 import { Store } from '@ngrx/store';
 import { selectAllFiles, selectIsLoading, selectSortSettings, SortOrder } from '../qmail-file.reducer';
@@ -12,7 +12,8 @@ import { ChangeSortSettings } from '../qmail-file.actions';
 @Component({
   selector: 'app-files-list',
   templateUrl: './files-list.component.html',
-  styleUrls: ['./files-list.component.css']
+  styleUrls: ['./files-list.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FilesListComponent implements OnInit, AfterViewInit, OnDestroy {
   files$: Observable<QmailFile[]>;

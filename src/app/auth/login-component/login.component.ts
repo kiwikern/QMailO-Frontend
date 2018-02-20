@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { RootState } from '../../reducers';
 import { Store } from '@ngrx/store';
 import { LoginRequest } from '../auth.actions';
@@ -6,7 +6,8 @@ import { LoginRequest } from '../auth.actions';
 @Component({
   selector: 'app-login-component',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent implements OnInit {
 
