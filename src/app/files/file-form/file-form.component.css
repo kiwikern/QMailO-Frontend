@@ -11,3 +11,10 @@ mat-card-content {
   display: flex;
   flex-direction: column;
 }
+
+.full-width {
+  margin-bottom: -25px !important;
+  margin-left: -25px;
+  margin-right: -25px;
+  width: calc(100% + 50px);
+}

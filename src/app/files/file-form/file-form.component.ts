@@ -3,12 +3,13 @@ import { QmailFile } from '../qmail-file.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { RootState } from '../../reducers';
-import { selectById, selectIsLoading } from '../qmail-file.reducer';
+import { selectById, selectIsLoading, selectIsSaving } from '../qmail-file.reducer';
 import { filter, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { AddQmailFileRequest, DeleteQmailFileRequest, UpdateQmailFileRequest } from '../qmail-file.actions';
 import { InfoSnackBarService } from '../../info-snack-bar.service';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { combineLatest } from 'rxjs/observable/combineLatest';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-file-form',
@@ -20,6 +21,7 @@ export class FileFormComponent implements OnInit, OnDestroy {
   file: QmailFile = {id: '', content: ''};
   id: string;
   isLoading = false;
+  isSaving$: Observable<boolean>;
   onDestroy$ = new ReplaySubject<boolean>(1);
 
   constructor(private route: ActivatedRoute,
@@ -29,6 +31,8 @@ export class FileFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.isSaving$ = this.store.select(selectIsSaving);
+
     const idParam$ = this.route.params.pipe(
       tap(param => this.id = param.id),
       takeUntil(this.onDestroy$)

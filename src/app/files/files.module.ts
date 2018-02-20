@@ -8,6 +8,7 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
+  MatProgressBarModule,
   MatProgressSpinnerModule,
   MatSelectModule,
   MatSortModule,
@@ -46,6 +47,7 @@ const fileRoutes: Routes = [
     MatButtonModule,
     MatCardModule,
     MatIconModule,
+    MatProgressBarModule,
     MatProgressSpinnerModule,
     ScrollDispatchModule,
     FormsModule

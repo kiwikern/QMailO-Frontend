@@ -1,10 +1,8 @@
 <form #form="ngForm" (ngSubmit)="save()">
   <mat-card>
 
-    <mat-card-title *ngIf="id" style="display: flex">
-      <span>Edit</span>
-      <span style="flex: 1"></span>
-      <mat-spinner *ngIf="isLoading" [diameter]="30"></mat-spinner>
+    <mat-card-title *ngIf="id">
+      Edit
     </mat-card-title>
     <mat-card-title *ngIf="!id">
       Add a new file
@@ -33,5 +31,6 @@
       <button mat-raised-button type="submit" [disabled]="!form.valid">Save</button>
     </mat-card-actions>
 
+    <mat-progress-bar class="full-width" mode="indeterminate" *ngIf="isLoading || (isSaving$ | async)"></mat-progress-bar>
   </mat-card>
 </form>
