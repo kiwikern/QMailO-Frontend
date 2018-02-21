@@ -1,0 +1,8 @@
+<app-file-form
+  [id]="(file$ | async)?.id"
+  [content]="(file$ | async)?.content"
+  [title]="'Edit'"
+  [showLoadingAnimation]="(isLoading$ | async) || (isSaving$ | async)"
+  (delete)="delete($event)"
+  (save)="save($event)"
+></app-file-form>

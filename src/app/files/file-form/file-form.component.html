@@ -1,30 +1,27 @@
-<form #form="ngForm" (ngSubmit)="save()" class="container">
+<form #form="ngForm" (ngSubmit)="saveFile()" class="container">
   <mat-card>
     <!-- Must not be at last position because of ::last-child for mat-card -->
-    <mat-progress-bar class="full-width" mode="indeterminate" *ngIf="isLoading || (isSaving$ | async)"></mat-progress-bar>
-    <mat-card-title *ngIf="id">
-      Edit
-    </mat-card-title>
-    <mat-card-title *ngIf="!id">
-      Add a new file
+    <mat-progress-bar class="full-width" mode="indeterminate" *ngIf="showLoadingAnimation"></mat-progress-bar>
+    <mat-card-title>
+      {{title}}
     </mat-card-title>
 
     <mat-card-content>
       <mat-form-field>
         <span matPrefix class="gray">.qmail-</span>
         <input matInput #name name="id" placeholder="Name" pattern="[^\.^\s^\\^/^\?^%^\*^:^|^<^>]+"
-               [(ngModel)]="file.id" [disabled]="id" required>
+               [(ngModel)]="id" [disabled]="!isNew" required>
         <mat-error *ngIf="name.validity && name.value">Name includes prohibited characters.</mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <textarea matInput matTextareaAutosize name="content" placeholder="Content" required
-                  [(ngModel)]="file.content"></textarea>
+                  [(ngModel)]="content"></textarea>
       </mat-form-field>
     </mat-card-content>
 
     <mat-card-actions style="display: flex" align="right">
-      <button mat-icon-button type="button" (click)="deleteFile()" *ngIf="id">
+      <button mat-icon-button type="button" (click)="deleteFile()" *ngIf="!isNew">
         <mat-icon>delete</mat-icon>
       </button>
       <span style="flex: 1;"></span>

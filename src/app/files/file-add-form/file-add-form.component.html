@@ -1,0 +1,6 @@
+<app-file-form
+  [title]="'Add new file'"
+  [showLoadingAnimation]="isSaving$ | async"
+  [isNew]="true"
+  (save)="save($event)"
+></app-file-form>
