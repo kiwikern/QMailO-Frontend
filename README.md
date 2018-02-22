@@ -1,8 +1,12 @@
 # QmailoFrontend
 
+
 QMailO helps you organize your `.qmail` files. For it to work, you need to set up the [QMailO Server](https://github.com/kiwikern/QMailO) as well. This web app was designed with Uberspace in mind.
-The app is available in English and German. 
-![qmailo_features](https://user-images.githubusercontent.com/2671139/36562568-ab2c5e56-1817-11e8-8ea3-cd669f927954.gif)
+The app is available in English and German.
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/2671139/36565035-8ad77908-181f-11e8-9ab7-b8d673e32aa0.gif">
+</p>
+
 
 ## Setup
 * Set up your [QMailO Server](https://github.com/kiwikern/QMailO).
