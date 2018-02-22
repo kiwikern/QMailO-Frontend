@@ -24,7 +24,7 @@ import { ShareService } from './share.service';
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: '', redirectTo: 'files', pathMatch: 'full'},
-  {path: 'files', loadChildren: './files/files.module#FilesModule', canLoad: [LoginGuard]},
+  {path: 'files', loadChildren: './files/files.module#FilesModule', canActivateChild: [LoginGuard], canLoad: [LoginGuard]},
   {path: 'about', component: AboutComponent}
 ];
 
