@@ -44,7 +44,8 @@
         </mat-table>
       </mat-card-content>
       <mat-card-actions style="display: flex; justify-content: center">
-        <mat-spinner *ngIf="isLoading$ | async"></mat-spinner>
+        <mat-spinner
+          *ngIf="(isLoading$ | async) || (files$ | async)?.length >= 20 && !(shouldLoadAllData$ | async)"></mat-spinner>
       </mat-card-actions>
     </mat-card>
   </div>

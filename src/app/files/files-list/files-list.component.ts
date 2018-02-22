@@ -1,13 +1,16 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { RootState } from '../../reducers';
 import { Store } from '@ngrx/store';
 import { FilterField, selectAllFiles, selectFilterSettings, selectIsLoading, selectSortSettings, SortOrder } from '../qmail-file.reducer';
 import { Observable } from 'rxjs/Observable';
 import { MatSort, MatTableDataSource, Sort } from '@angular/material';
-import { takeUntil } from 'rxjs/operators';
+import { concat, distinctUntilChanged, filter, map, startWith, take, takeUntil, takeWhile } from 'rxjs/operators';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { QmailFile } from '../qmail-file.model';
 import { ChangeFilterSettings, ChangeSortSettings } from '../qmail-file.actions';
+import { ScrollDispatcher } from '@angular/cdk/scrolling';
+import { combineLatest } from 'rxjs/observable/combineLatest';
+import { of } from 'rxjs/observable/of';
 
 @Component({
   selector: 'app-files-list',
@@ -16,7 +19,6 @@ import { ChangeFilterSettings, ChangeSortSettings } from '../qmail-file.actions'
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FilesListComponent implements OnInit, AfterViewInit, OnDestroy {
-  files$: Observable<QmailFile[]>;
   isLoading$: Observable<boolean>;
   columnsToDisplay = ['id', 'content'];
   dataSource = new MatTableDataSource<QmailFile>();
@@ -25,22 +27,24 @@ export class FilesListComponent implements OnInit, AfterViewInit, OnDestroy {
   onDestroy$ = new ReplaySubject<boolean>(1);
   sortSettings$: Observable<{ sortAttribute: string; sortOrder: SortOrder }>;
   filterSettings$: Observable<{ filterValue: string; filterField: FilterField }>;
+  files$: Observable<QmailFile[]>;
+  shouldLoadAllData$: Observable<boolean>;
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private store: Store<RootState>) {
+  constructor(private store: Store<RootState>,
+              private scroll: ScrollDispatcher,
+              private ngZone: NgZone) {
   }
 
   ngOnInit() {
-    this.files$ = this.store.select(selectAllFiles)
-      .pipe(takeUntil(this.onDestroy$));
     this.isLoading$ = this.store.select(selectIsLoading);
     this.sortSettings$ = this.store.select(selectSortSettings);
     this.filterSettings$ = this.store.select(selectFilterSettings)
       .pipe(takeUntil(this.onDestroy$));
 
     // data source setup
-    this.files$.subscribe(files => this.dataSource.data = files);
+    this.getSlicesFiles().subscribe(files => this.ngZone.run(() => this.dataSource.data = files));
     this.dataSource.filterPredicate = (data, filter) => this.filterPredicate(data, filter);
     this.filterSettings$.pipe(takeUntil(this.onDestroy$))
       .subscribe(({filterValue, filterField}) => {
@@ -48,6 +52,46 @@ export class FilesListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.filterField = filterField;
         this.dataSource.filter = this.filterValue;
       });
+  }
+
+  getSlicesFiles() {
+    const hasScrolledToBottom$: Observable<boolean> = this.scroll.scrolled().pipe(
+      map(() => document.documentElement.scrollTop + document.body.clientHeight),
+      map(scrollBottom => document.documentElement.scrollHeight - 50 <= scrollBottom),
+      filter(hasScrolledToBottom => hasScrolledToBottom),
+      take(1),
+      startWith(false)
+    );
+    const hasAFilter$: Observable<boolean> = this.filterSettings$.pipe(
+      map(({filterValue, filterField}) => !!filterValue),
+    );
+    this.shouldLoadAllData$ = combineLatest(hasScrolledToBottom$, hasAFilter$).pipe(
+      map(([hasScrolled, hasFiltered]) => hasScrolled || hasFiltered),
+      distinctUntilChanged(),
+      takeWhile((loadAllData: boolean) => !loadAllData),
+      concat(of(true))
+    );
+
+    this.files$ = this.store.select(selectAllFiles)
+      .pipe(takeUntil(this.onDestroy$));
+
+    const slicedFiles$ = combineLatest(this.files$, this.shouldLoadAllData$, this.sortSettings$).pipe(
+      map(([files, shouldLoadAllData, sortSetting]) => {
+        if (shouldLoadAllData) {
+          return files;
+        } else {
+          files.sort((e1, e2) => {
+            if (e1[sortSetting.sortAttribute] > e2[sortSetting.sortAttribute]) {
+              return sortSetting.sortOrder === 'asc' ? 1 : -1;
+            } else {
+              return sortSetting.sortOrder === 'desc' ? 1 : -1;
+            }
+          });
+          return files.slice(0, 20);
+        }
+      })
+    );
+    return slicedFiles$;
   }
 
   ngAfterViewInit() {
