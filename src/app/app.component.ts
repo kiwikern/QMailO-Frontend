@@ -5,6 +5,8 @@ import { Logout } from './auth/auth.actions';
 import { selectJwt } from './auth/auth.reducer';
 import { LoadQmailFilesRequest } from './files/qmail-file.actions';
 import { InfoSnackBarService } from './info-snack-bar.service';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -13,15 +15,20 @@ import { InfoSnackBarService } from './info-snack-bar.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
+  showBackNavigation = false;
 
   jwt$: Store<string>;
 
   constructor(private store: Store<RootState>,
-              private snackBar: InfoSnackBarService) {
+              private snackBar: InfoSnackBarService,
+              private router: Router) {
   }
 
   ngOnInit() {
     this.jwt$ = this.store.select(selectJwt);
+    this.router.events.pipe(
+      filter(e => e instanceof NavigationEnd),
+    ).subscribe((event: NavigationEnd) => this.showBackNavigation = /.*(about|new|edit).*/.test(event.url));
   }
 
   logout() {
