@@ -19,6 +19,7 @@ import { InfoSnackBarService } from './info-snack-bar.service';
 import { MatButtonModule, MatIconModule, MatSnackBarModule, MatToolbarModule } from '@angular/material';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AboutComponent } from './about/about.component';
+import { ShareService } from './share.service';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -49,7 +50,8 @@ const routes: Routes = [
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-    InfoSnackBarService
+    InfoSnackBarService,
+    ShareService
   ],
   bootstrap: [AppComponent]
 })
