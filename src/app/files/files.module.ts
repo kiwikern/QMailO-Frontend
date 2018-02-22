@@ -27,17 +27,21 @@ import { LoadQmailFilesRequest } from './qmail-file.actions';
 import { RootState } from '../reducers';
 import { FileFormComponent } from './file-form/file-form.component';
 import { FileAddFormComponent } from './file-add-form/file-add-form.component';
+import { SettingsComponent } from './settings/settings.component';
+import { settingsReducer } from './store/settings.reducer';
 
 const fileRoutes: Routes = [
   {path: '', component: FilesListComponent},
   {path: 'edit/:id', component: FileEditFormComponent},
-  {path: 'new', component: FileAddFormComponent}
+  {path: 'new', component: FileAddFormComponent},
+  {path: 'settings', component: SettingsComponent}
 ];
 
 @NgModule({
   imports: [
     CommonModule,
     StoreModule.forFeature('files', reducer),
+    StoreModule.forFeature('settings', settingsReducer),
     EffectsModule.forFeature([QmailFileEffects]),
     RouterModule.forChild(fileRoutes),
     MatTableModule,
@@ -59,7 +63,8 @@ const fileRoutes: Routes = [
     FileEditFormComponent,
     FabButtonComponent,
     FileFormComponent,
-    FileAddFormComponent
+    FileAddFormComponent,
+    SettingsComponent
   ]
 })
 export class FilesModule {

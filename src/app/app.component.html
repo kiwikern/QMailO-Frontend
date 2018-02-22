@@ -7,6 +7,9 @@
   <button mat-icon-button type="button" routerLink="/about">
     <mat-icon>help_</mat-icon>
   </button>
+  <button *ngIf="jwt$ | async" mat-icon-button type="button" routerLink="/files/settings">
+    <mat-icon>settings</mat-icon>
+  </button>
   <button *ngIf="jwt$ | async" mat-icon-button type="button" (click)="reload()">
     <mat-icon>refresh</mat-icon>
   </button>

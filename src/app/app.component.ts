@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
     this.jwt$ = this.store.select(selectJwt);
     this.router.events.pipe(
       filter(e => e instanceof NavigationEnd),
-    ).subscribe((event: NavigationEnd) => this.showBackNavigation = /.*(about|new|edit).*/.test(event.url));
+    ).subscribe((event: NavigationEnd) => this.showBackNavigation = /.*(about|new|edit|settings).*/.test(event.url));
   }
 
   logout() {
