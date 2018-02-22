@@ -9,7 +9,7 @@
     "start:sw": "npm run build && npm run start:liteserver",
     "start:liteserver": "lite-server -c liteserver_config.js",
     "build": "ng build --prod",
-    "bild:de": "npm run build -- --i18n-file=src/i18n/messages.de.xlf --locale=de --i18n-format=xlf",
+    "build:de": "npm run build -- --i18n-file=src/i18n/messages.de.xlf --locale=de --i18n-format=xlf",
     "i18n": "ng xi18n --output-path src/i18n --locale de && xliffmerge --profile xliffmerge.json de",
     "test": "ng test",
     "lint": "ng lint",
