@@ -1,6 +1,9 @@
 <mat-toolbar color="primary">
   <span>QMailO</span>
   <span style="flex: 1"></span>
+  <button *ngIf="jwt$ | async" mat-icon-button type="button" (click)="reload()">
+    <mat-icon>refresh</mat-icon>
+  </button>
   <button *ngIf="jwt$ | async" mat-icon-button type="button" (click)="logout()">
     <mat-icon>exit_to_app</mat-icon>
   </button>

@@ -3,6 +3,8 @@ import { RootState } from './reducers';
 import { Store } from '@ngrx/store';
 import { Logout } from './auth/auth.actions';
 import { selectJwt } from './auth/auth.reducer';
+import { LoadQmailFilesRequest } from './files/qmail-file.actions';
+import { InfoSnackBarService } from './info-snack-bar.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +16,8 @@ export class AppComponent implements OnInit {
 
   jwt$: Store<string>;
 
-  constructor(private store: Store<RootState>) {
+  constructor(private store: Store<RootState>,
+              private snackBar: InfoSnackBarService) {
   }
 
   ngOnInit() {
@@ -23,6 +26,11 @@ export class AppComponent implements OnInit {
 
   logout() {
     this.store.dispatch(new Logout());
+  }
+
+  reload() {
+    this.store.dispatch(new LoadQmailFilesRequest());
+    this.snackBar.open('Reloading files from server.');
   }
 
 }
