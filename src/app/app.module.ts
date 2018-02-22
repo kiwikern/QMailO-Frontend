@@ -18,16 +18,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InfoSnackBarService } from './info-snack-bar.service';
 import { MatButtonModule, MatIconModule, MatSnackBarModule, MatToolbarModule } from '@angular/material';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { AboutComponent } from './about/about.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: '', redirectTo: 'files', pathMatch: 'full'},
-  {path: 'files', loadChildren: './files/files.module#FilesModule', canLoad: [LoginGuard]}
+  {path: 'files', loadChildren: './files/files.module#FilesModule', canLoad: [LoginGuard]},
+  {path: 'about', component: AboutComponent}
 ];
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
