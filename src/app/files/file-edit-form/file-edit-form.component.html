@@ -1,7 +1,8 @@
 <app-file-form
   [id]="(file$ | async)?.id"
   [content]="(file$ | async)?.content"
-  [title]="'Edit'"
+  title="Edit this file"
+  i18n-title="@@file-edit-form:title"
   [showLoadingAnimation]="(isLoading$ | async) || (isSaving$ | async)"
   (delete)="delete($event)"
   (save)="save($event)"

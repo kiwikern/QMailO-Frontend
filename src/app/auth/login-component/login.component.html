@@ -1,8 +1,8 @@
 <div style="display: flex; align-items: center; justify-content: center">
   <form (ngSubmit)="submit()" #form="ngForm">
     <mat-card>
-      <mat-card-title>Login</mat-card-title>
-      <mat-card-subtitle>
+      <mat-card-title i18n="@@login:title">Login</mat-card-title>
+      <mat-card-subtitle i18n="@@login:subtitle">
         Login with the password from your server setup.
       </mat-card-subtitle>
       <mat-card-content>
@@ -12,12 +12,13 @@
                  autocomplete="password"
                  type="password"
                  placeholder="Password"
+                 i18n-placeholder="@@login:password"
                  required
                  [(ngModel)]="password">
         </mat-form-field>
       </mat-card-content>
       <mat-card-actions align="right">
-        <button mat-button mat-raised-button type="submit" [disabled]="!form.valid">Login</button>
+        <button mat-button mat-raised-button type="submit" [disabled]="!form.valid" i18n="@@login:login">Login</button>
       </mat-card-actions>
     </mat-card>
   </form>

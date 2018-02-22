@@ -1,5 +1,6 @@
 <app-file-form
-  [title]="'Add new file'"
+  title="Add a new file"
+  i18n-title="@@add-file-form:title"
   [content]="defaultContent$ | async"
   [showLoadingAnimation]="isSaving$ | async"
   [isNew]="true"

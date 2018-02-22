@@ -9,13 +9,13 @@
     <mat-card-content>
       <mat-form-field>
         <span matPrefix class="gray">.qmail-</span>
-        <input matInput #name name="id" placeholder="Name" pattern="[^\.^\s^\\^/^\?^%^\*^:^|^<^>]+"
+        <input matInput #name name="id" placeholder="Name" i18n-placeholder pattern="[^\.^\s^\\^/^\?^%^\*^:^|^<^>]+"
                [(ngModel)]="id" [disabled]="!isNew" required>
-        <mat-error *ngIf="name.validity && name.value">Name includes prohibited characters.</mat-error>
+        <mat-error *ngIf="name.validity && name.value" i18n="@@file-form:id-error">Name includes prohibited characters.</mat-error>
       </mat-form-field>
 
       <mat-form-field>
-        <textarea matInput matTextareaAutosize name="content" placeholder="Content" required
+        <textarea matInput matTextareaAutosize name="content" placeholder="Content" i18n-placeholder required
                   [(ngModel)]="content"></textarea>
       </mat-form-field>
     </mat-card-content>
@@ -26,8 +26,8 @@
       </button>
       <span style="flex: 1;"></span>
       <button mat-raised-button type="submit" [disabled]="!form.valid || form.pristine">
-        <ng-container *ngIf="isNew">Add</ng-container>
-        <ng-container *ngIf="!isNew">Edit</ng-container>
+        <ng-container *ngIf="isNew" i18n="@@file-form:add">Add</ng-container>
+        <ng-container *ngIf="!isNew" i18n="@@file-form:edit">Edit</ng-container>
       </button>
     </mat-card-actions>
   </mat-card>
