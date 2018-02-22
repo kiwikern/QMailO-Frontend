@@ -32,13 +32,16 @@ export class FilesListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.files$ = this.store.select(selectAllFiles);
+    this.files$ = this.store.select(selectAllFiles)
+      .pipe(takeUntil(this.onDestroy$));
     this.isLoading$ = this.store.select(selectIsLoading);
-    this.files$.pipe(takeUntil(this.onDestroy$))
-      .subscribe(files => this.dataSource.data = files);
-    this.dataSource.filterPredicate = (data, filter) => this.filterPredicate(data, filter);
     this.sortSettings$ = this.store.select(selectSortSettings);
-    this.filterSettings$ = this.store.select(selectFilterSettings);
+    this.filterSettings$ = this.store.select(selectFilterSettings)
+      .pipe(takeUntil(this.onDestroy$));
+
+    // data source setup
+    this.files$.subscribe(files => this.dataSource.data = files);
+    this.dataSource.filterPredicate = (data, filter) => this.filterPredicate(data, filter);
     this.filterSettings$.pipe(takeUntil(this.onDestroy$))
       .subscribe(({filterValue, filterField}) => {
         this.filterValue = filterValue;
