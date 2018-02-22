@@ -48,7 +48,7 @@ export class FileEditFormComponent implements OnInit {
   }
 
   delete(id: string) {
-    const snackBarRef = this.snackBar.open('Are you sure you want to delete this file?', 'Delete file');
+    const snackBarRef = this.snackBar.open('SnackBar.Message.Confirmation.DeleteFile', 'SnackBar.Action.DeleteFile');
     snackBarRef.onAction().subscribe(() => this.store.dispatch(new DeleteQmailFileRequest({id})));
   }
 

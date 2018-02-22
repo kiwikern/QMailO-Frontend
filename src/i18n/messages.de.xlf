@@ -46,7 +46,7 @@
           <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/>
           .qmail
           <x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code>"/>
-          herumliegen.
+          Dateien herumliegen.
         </target>
       </trans-unit>
       <trans-unit id="about:praise" datatype="html">

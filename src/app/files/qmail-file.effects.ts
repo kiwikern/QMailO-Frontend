@@ -63,49 +63,49 @@ export class QmailFileEffects {
     const actions = [action];
     switch (error.status) {
       case 0:
-        this.snackBar.open('Could not connect. Check your internet connection.');
+        this.snackBar.open('SnackBar.Message.Error.NoInternetConnection');
         break;
       case 401:
-        this.snackBar.open('You need to be logged in.');
+        this.snackBar.open('SnackBar.Message.Error.LoginNeeded');
         actions.push({type: AuthActionTypes.LOGOUT});
         break;
       case 404:
-        this.snackBar.open('File does not exist and cannot be edited.');
+        this.snackBar.open('SnackBar.Message.Error.NoFileFoundForEdit');
         actions.push({type: QmailFileActionTypes.LoadQmailFilesRequest});
         break;
       case 409:
-        this.snackBar.open('File does already exist. Edit the file from the list instead.');
+        this.snackBar.open('SnackBar.Message.Error.FileAlreadyExists');
         break;
       case 400:
         this.snackBar.open(error.error);
         break;
       case 504:
-        this.snackBar.open('Server not reachable.');
+        this.snackBar.open('SnackBar.Message.Error.ServerNotReachable');
         break;
       case 500:
-        this.snackBar.open('Something went wrong. Check the server logs.');
+        this.snackBar.open('SnackBar.Message.Error.ServerError');
         break;
       default:
         console.log(error);
-        this.snackBar.open('Something went wrong. Check the browser console.');
+        this.snackBar.open('SnackBar.Message.Error.ClientError');
     }
     return of(actions).pipe(switchMap(a => a));
   }
 
   private addSuccess(qmailFile) {
-    this.snackBar.open(`File ${qmailFile.id} was successfully added.`);
+    this.snackBar.open('SnackBar.Message.Error.FileAdded');
     this.router.navigate(['/files']);
     return {type: QmailFileActionTypes.AddQmailFile, payload: {qmailFile}};
   }
 
   private deleteSuccess(id) {
-    this.snackBar.open(`File ${id} was successfully deleted.`);
+    this.snackBar.open('SnackBar.Message.Error.FileDeleted');
     this.router.navigate(['/files']);
     return {type: QmailFileActionTypes.DeleteQmailFile, payload: {id}};
   }
 
   private updateSuccess(qmailFile) {
-    this.snackBar.open(`File ${qmailFile.id} was successfully edited.`);
+    this.snackBar.open('SnackBar.Message.Error.FileEdited');
     const change = {id: qmailFile.id, changes: {content: qmailFile.content}};
     this.router.navigate(['/files']);
     return {type: QmailFileActionTypes.UpdateQmailFile, payload: {qmailFile: change}};

@@ -20,6 +20,7 @@ import { MatButtonModule, MatIconModule, MatSnackBarModule, MatToolbarModule } f
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AboutComponent } from './about/about.component';
 import { ShareService } from './share.service';
+import { I18nService } from './i18n.service';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -51,7 +52,8 @@ const routes: Routes = [
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     InfoSnackBarService,
-    ShareService
+    ShareService,
+    I18nService
   ],
   bootstrap: [AppComponent]
 })

@@ -38,15 +38,15 @@ export class AuthEffects {
   private handleError(error) {
     console.log(error);
     if (error.status === 401) {
-      this.snackBar.open('Wrong password. You can reset your password on your server.');
+      this.snackBar.open('SnackBar.Message.Error.WrongPassword');
     } else if (error.status === 0) {
-      this.snackBar.open('No internet connection.');
+      this.snackBar.open('SnackBar.Message.Error.NoInternetConnection');
     } else if (error.status === 500) {
-      this.snackBar.open('Internal error. Check your server logs.');
+      this.snackBar.open('SnackBar.Message.Error.ServerError');
     } else if (error.status === 504) {
-      this.snackBar.open('Server not reachable.');
+      this.snackBar.open('SnackBar.Message.Error.ServerNotReachable');
     } else {
-      this.snackBar.open('Something went wrong. Check browser console.');
+      this.snackBar.open('SnackBar.Message.Error.ClientError');
       console.log(error);
     }
     return of({type: AuthActionTypes.LOGIN_FAIL});

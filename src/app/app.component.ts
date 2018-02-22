@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
 
   reload() {
     this.store.dispatch(new LoadQmailFilesRequest());
-    this.snackBar.open('Reloading files from server.');
+    this.snackBar.open('SnackBar.Message.Info.ReloadingFiles');
   }
 
 }

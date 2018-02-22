@@ -25,7 +25,7 @@ export class AboutComponent implements OnInit {
     } else {
       wasSuccessful = this.shareService.copyToClipboard('https://github.com/kiwikern/QMailO');
       if (wasSuccessful) {
-        this.snackBar.open('The URL was copied to your clipboard. Thanks for sharing.');
+        this.snackBar.open('SnackBar.Message.Info.URLCopied');
       }
     }
   }
