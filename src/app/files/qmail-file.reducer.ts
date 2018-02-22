@@ -4,6 +4,7 @@ import { QmailFileActionTypes } from './qmail-file.actions';
 import { Action, createFeatureSelector, createSelector } from '@ngrx/store';
 
 export type SortOrder = 'asc' | 'desc';
+export type FilterField = 'id' | 'name';
 
 export interface FileState extends EntityState<QmailFile> {
   // additional entities state properties
@@ -11,6 +12,8 @@ export interface FileState extends EntityState<QmailFile> {
   isSaving: boolean;
   sortAttribute: string;
   sortOrder: SortOrder;
+  filterValue: string;
+  filterField: FilterField;
 }
 
 export const adapter: EntityAdapter<QmailFile> = createEntityAdapter<QmailFile>();
@@ -20,7 +23,9 @@ export const initialState: FileState = adapter.getInitialState({
   isLoading: false,
   isSaving: false,
   sortAttribute: 'id',
-  sortOrder: 'asc' as SortOrder
+  sortOrder: 'asc' as SortOrder,
+  filterValue: '',
+  filterField: 'id' as FilterField,
 });
 
 export function reducer(state = initialState,
@@ -94,6 +99,13 @@ export function reducer(state = initialState,
       });
     }
 
+    case QmailFileActionTypes.ChangeFilterSettings: {
+      return Object.assign({}, state, {
+        filterValue: action.payload.filterValue,
+        filterField: action.payload.filterField
+      });
+    }
+
     default: {
       return state;
     }
@@ -118,4 +130,8 @@ export const selectById = id => createSelector(selectAllFiles, files => files.fi
 export const selectSortSettings = createSelector(selectQMailFiles, state => ({
   sortAttribute: state.sortAttribute,
   sortOrder: state.sortOrder
+}));
+export const selectFilterSettings = createSelector(selectQMailFiles, state => ({
+  filterValue: state.filterValue,
+  filterField: state.filterField
 }));

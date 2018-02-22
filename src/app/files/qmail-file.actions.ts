@@ -1,9 +1,10 @@
 import { Action } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 import { QmailFile } from './qmail-file.model';
-import { SortOrder } from './qmail-file.reducer';
+import { FilterField, SortOrder } from './qmail-file.reducer';
 
 export enum QmailFileActionTypes {
+  ChangeFilterSettings = '[QmailFile] Change Filter Settings',
   ChangeSortSettings = '[QmailFile] Change Sort Settings',
   LoadQmailFiles = '[QmailFile] Load QmailFiles',
   LoadQmailFilesRequest = '[QmailFile] Request Loading QmailFiles',
@@ -124,6 +125,13 @@ export class ChangeSortSettings implements Action {
   readonly type = QmailFileActionTypes.ChangeSortSettings;
 
   constructor(public payload: { sortAttribute: string, sortOrder: SortOrder}) {
+  }
+}
+
+export class ChangeFilterSettings implements Action {
+  readonly type = QmailFileActionTypes.ChangeFilterSettings;
+
+  constructor(public payload: { filterValue: string, filterField: FilterField}) {
   }
 }
 

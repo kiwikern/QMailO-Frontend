@@ -44,3 +44,10 @@ mat-card {
 ::ng-deep .mat-form-field .mat-form-field-infix {
   width: auto;
 }
+
+.clear {
+  color: gray;
+  /*font-size: 20px;*/
+  /*height: 20px;*/
+  /*width: 20px;*/
+}

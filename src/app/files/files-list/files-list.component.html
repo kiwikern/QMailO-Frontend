@@ -4,14 +4,17 @@
       <div style="display: flex; flex-direction: row">
 
         <mat-form-field class="filter small">
-          <mat-select placeholder="Search field" [(value)]="searchField" class="form">
+          <mat-select placeholder="Search field" [(value)]="filterField" (selectionChange)="applyFilter()" class="form">
             <mat-option value="id">Name</mat-option>
             <mat-option value="content">Content</mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field class="filter stretch">
-          <input matInput placeholder="Filter" (keyup)="applyFilter($event.target.value)">
+          <input matInput placeholder="Filter" [(ngModel)]="filterValue" (keyup)="applyFilter()">
+          <span matSuffix (click)="filterValue = ''; applyFilter()" *ngIf="filterValue">
+            <button class="clear" mat-icon-button><mat-icon>cancel</mat-icon></button>
+          </span>
         </mat-form-field>
       </div>
       <mat-card-content>
