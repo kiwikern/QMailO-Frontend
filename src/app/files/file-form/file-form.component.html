@@ -25,8 +25,10 @@
         <mat-icon>delete</mat-icon>
       </button>
       <span style="flex: 1;"></span>
-      <button mat-button routerLink="/files" type="button">Cancel</button>
-      <button mat-raised-button type="submit" [disabled]="!form.valid">Save</button>
+      <button mat-raised-button type="submit" [disabled]="!form.valid || form.pristine">
+        <ng-container *ngIf="isNew">Add</ng-container>
+        <ng-container *ngIf="!isNew">Edit</ng-container>
+      </button>
     </mat-card-actions>
   </mat-card>
 </form>
