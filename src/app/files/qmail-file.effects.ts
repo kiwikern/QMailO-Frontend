@@ -71,6 +71,7 @@ export class QmailFileEffects {
         break;
       case 404:
         this.snackBar.open('File does not exist and cannot be edited.');
+        actions.push({type: QmailFileActionTypes.LoadQmailFilesRequest});
         break;
       case 409:
         this.snackBar.open('File does already exist. Edit the file from the list instead.');
