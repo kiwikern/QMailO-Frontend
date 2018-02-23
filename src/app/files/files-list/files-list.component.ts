@@ -46,6 +46,8 @@ export class FilesListComponent implements OnInit, AfterViewInit, OnDestroy {
     // data source setup
     this.getSlicesFiles().subscribe(files => this.ngZone.run(() => this.dataSource.data = files));
     this.dataSource.filterPredicate = (data, filter) => this.filterPredicate(data, filter);
+    // workaround for bug: https://github.com/angular/material2/issues/9966
+    this.dataSource.sortingDataAccessor = (data, header) => data[header];
     this.filterSettings$.pipe(takeUntil(this.onDestroy$))
       .subscribe(({filterValue, filterField}) => {
         this.filterValue = filterValue;
