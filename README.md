@@ -10,7 +10,7 @@ The app is available in English and German.
 
 ## Setup
 * Set up your [QMailO Server](https://github.com/kiwikern/QMailO).
-* Download the [latest release](https://github.com/kiwikern/QMailO-Frontend/releases/latest) and unzip the language version of your choice it to the folder served by your web server.
+* Download the [latest release](https://github.com/kiwikern/QMailO-Frontend/releases/latest) and unzip the language version of your choice to the folder served by your web server.
 * Forward all requests to `api/*` to your QMailO server, e. g. `localhost:30000`, anything else to `index.html`.
   * There is a `.htaccess` included with a sample configuration. If you don't want to use it, you can just delete it.
 
