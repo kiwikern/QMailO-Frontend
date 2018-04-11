@@ -1,4 +1,4 @@
-mat-card {
+:host {
   max-width: 600px;
 }
 
