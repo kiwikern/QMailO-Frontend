@@ -1,4 +1,4 @@
-<form #form="ngForm" (ngSubmit)="saveFile()" class="container">
+<form #form="ngForm" (ngSubmit)="saveFile()">
   <mat-card>
     <!-- Must not be at last position because of ::last-child for mat-card -->
     <mat-progress-bar class="full-width" mode="indeterminate" *ngIf="showLoadingAnimation"></mat-progress-bar>
