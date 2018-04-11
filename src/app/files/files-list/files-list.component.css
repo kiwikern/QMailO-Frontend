@@ -2,6 +2,12 @@
   max-width: 800px;
 }
 
+@media (max-width: 800px) {
+  :host {
+    max-width: 100vw;
+  }
+}
+
 .filter {
   margin: 0 10px;
 }
