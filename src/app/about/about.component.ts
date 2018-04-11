@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { InfoSnackBarService } from '../info-snack-bar.service';
 import { ShareService } from '../share.service';
 
+declare function require(moduleName: string): any;
+
+const {version: packageVersion} = require('../../../package.json');
+
 @Component({
   selector: 'app-about',
   templateUrl: './about.component.html',
@@ -9,8 +13,11 @@ import { ShareService } from '../share.service';
 })
 export class AboutComponent implements OnInit {
 
+  appVersion: string;
+
   constructor(private snackBar: InfoSnackBarService,
               private shareService: ShareService) {
+    this.appVersion = packageVersion;
   }
 
   ngOnInit() {
