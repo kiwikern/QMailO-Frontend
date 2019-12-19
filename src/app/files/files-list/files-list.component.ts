@@ -2,15 +2,13 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, NgZone, OnDestroy, O
 import { RootState } from '../../reducers';
 import { Store } from '@ngrx/store';
 import { FilterField, selectAllFiles, selectFilterSettings, selectIsLoading, selectSortSettings, SortOrder } from '../qmail-file.reducer';
-import { Observable } from 'rxjs/Observable';
-import { MatSort, MatTableDataSource, Sort } from '@angular/material';
+import { combineLatest, Observable, of, ReplaySubject } from 'rxjs';
+import { MatSort, Sort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { concat, distinctUntilChanged, filter, map, startWith, take, takeUntil, takeWhile } from 'rxjs/operators';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { QmailFile } from '../qmail-file.model';
 import { ChangeFilterSettings, ChangeSortSettings } from '../qmail-file.actions';
 import { ScrollDispatcher } from '@angular/cdk/scrolling';
-import { combineLatest } from 'rxjs/observable/combineLatest';
-import { of } from 'rxjs/observable/of';
 
 @Component({
   selector: 'app-files-list',
@@ -30,7 +28,7 @@ export class FilesListComponent implements OnInit, AfterViewInit, OnDestroy {
   files$: Observable<QmailFile[]>;
   shouldLoadAllData$: Observable<boolean>;
 
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(private store: Store<RootState>,
               private scroll: ScrollDispatcher,

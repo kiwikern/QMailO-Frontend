@@ -7,7 +7,7 @@ import { selectById, selectIsLoading, selectIsSaving } from '../qmail-file.reduc
 import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { DeleteQmailFileRequest, UpdateQmailFileRequest } from '../qmail-file.actions';
 import { InfoSnackBarService } from '../../info-snack-bar.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-file-edit-form',

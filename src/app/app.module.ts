@@ -16,7 +16,10 @@ import { LoginComponent } from './auth/login-component/login.component';
 import { LoginGuard } from './auth/login.guard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InfoSnackBarService } from './info-snack-bar.service';
-import { MatButtonModule, MatIconModule, MatSnackBarModule, MatToolbarModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AboutComponent } from './about/about.component';
 import { ShareService } from './share.service';
@@ -25,7 +28,7 @@ import { I18nService } from './i18n.service';
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: '', redirectTo: 'files', pathMatch: 'full'},
-  {path: 'files', loadChildren: './files/files.module#FilesModule', canActivateChild: [LoginGuard], canLoad: [LoginGuard]},
+  {path: 'files', loadChildren: () => import('./files/files.module').then(m => m.FilesModule), canActivateChild: [LoginGuard], canLoad: [LoginGuard]},
   {path: 'about', component: AboutComponent}
 ];
 

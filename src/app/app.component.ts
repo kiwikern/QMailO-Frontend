@@ -7,6 +7,7 @@ import { LoadQmailFilesRequest } from './files/qmail-file.actions';
 import { InfoSnackBarService } from './info-snack-bar.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,7 @@ import { filter } from 'rxjs/operators';
 export class AppComponent implements OnInit {
   showBackNavigation = false;
 
-  jwt$: Store<string>;
+  jwt$: Observable<string>;
 
   constructor(private store: Store<RootState>,
               private snackBar: InfoSnackBarService,

@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { QmailFileActionTypes } from './qmail-file.actions';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { of } from 'rxjs/observable/of';
 import { Router } from '@angular/router';
 import { InfoSnackBarService } from '../info-snack-bar.service';
 import { AuthActionTypes } from '../auth/auth.actions';

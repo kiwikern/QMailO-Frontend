@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { selectIsSaving } from '../qmail-file.reducer';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { AddQmailFileRequest } from '../qmail-file.actions';
 import { RootState } from '../../reducers';
 import { Store } from '@ngrx/store';
