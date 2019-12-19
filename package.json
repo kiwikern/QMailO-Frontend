@@ -10,9 +10,9 @@
     "start:liteserver": "lite-server -c liteserver_config.js",
     "build": "ng build --prod",
     "build:en": "npm run build -- --output-path=qmailo-frontend_v%npm_package_version%_en",
-    "build:de": "npm run build -- --i18n-file=src/i18n/messages.de.xlf --locale=de --i18n-format=xlf --output-path=qmailo-frontend_v%npm_package_version%_de",
+    "build:de": "npm run build -- --i18n-file=src/i18n/messages.de.xlf --i18n-locale=de --i18n-format=xlf --output-path=qmailo-frontend_v%npm_package_version%_de",
     "release": "npm run build:en && npm run build:de",
-    "i18n": "ng xi18n --output-path src/i18n --locale de && xliffmerge --profile xliffmerge.json de",
+    "i18n": "ng xi18n --output-path src/i18n --i18n-locale de && xliffmerge --profile xliffmerge.json de",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
