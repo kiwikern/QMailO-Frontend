@@ -5,6 +5,7 @@
 /dist-server
 /tmp
 /out-tsc
+/qmailo-frontend_v*
 
 # dependencies
 /node_modules
