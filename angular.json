@@ -141,5 +141,8 @@
     "@ngrx/schematics:directive": {
       "prefix": "app"
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }
