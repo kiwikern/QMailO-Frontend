@@ -20,7 +20,7 @@ import { reducer } from './qmail-file.reducer';
 import { FileEditFormComponent } from './file-edit-form/file-edit-form.component';
 import { FormsModule } from '@angular/forms';
 import { FabButtonComponent } from './fab-button/fab-button.component';
-import { ScrollDispatchModule } from '@angular/cdk/scrolling';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { LoadQmailFilesRequest } from './qmail-file.actions';
 import { RootState } from '../reducers';
 import { FileFormComponent } from './file-form/file-form.component';
@@ -53,7 +53,7 @@ const fileRoutes: Routes = [
     MatIconModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
-    ScrollDispatchModule,
+    ScrollingModule,
     FormsModule
   ],
   declarations: [

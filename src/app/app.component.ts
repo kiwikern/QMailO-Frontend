@@ -7,7 +7,7 @@ import { LoadQmailFilesRequest } from './files/qmail-file.actions';
 import { InfoSnackBarService } from './info-snack-bar.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
